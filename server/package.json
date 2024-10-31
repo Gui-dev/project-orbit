@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch --env-file=.env --ignore node_modules src/http/server.ts"
+    "dev": "tsx watch --env-file=.env --ignore node_modules src/http/server.ts",
+    "seed": "tsx --env-file=.env src/db/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -12,11 +13,14 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^22.8.2",
+    "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.26.2",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "dayjs": "^1.11.13",
     "drizzle-orm": "^0.35.3",
     "fastify": "^5.0.0",
     "pg": "^8.13.1",
