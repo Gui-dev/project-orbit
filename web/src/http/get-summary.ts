@@ -1,11 +1,14 @@
 type SummaryProps = {
   completed: number
   total: number
-  goalsPerDay: Array<{
-    id: string
-    title: string
-    completedAt: string
-  }>
+  goalsPerDay: Record<
+    string,
+    {
+      id: string
+      title: string
+      createdAt: string
+    }[]
+  >
 }
 
 export const getSummary = async (): Promise<SummaryProps> => {
