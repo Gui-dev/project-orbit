@@ -18,7 +18,8 @@ export const PendingGoals = () => {
 
   const handleCompletedGoal = async (goalId: string) => {
     await createGoalCompletion(goalId)
-    queryClient.invalidateQueries({ queryKey: ['summary', 'peding-goals'] })
+    queryClient.invalidateQueries({ queryKey: ['summary'] })
+    queryClient.invalidateQueries({ queryKey: ['peding-goals'] })
   }
 
   return (

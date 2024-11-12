@@ -5,16 +5,6 @@ import { Summary } from './components/summary'
 import { Dialog } from './components/ui/dialog'
 import { getSummary } from './http/get-summary'
 
-type SummaryProps = {
-  completed: number
-  total: number
-  goalsPerDay: Array<{
-    id: string
-    title: string
-    completedAt: string
-  }>
-}
-
 export const App = () => {
   const { data } = useQuery({
     queryKey: ['summary'],

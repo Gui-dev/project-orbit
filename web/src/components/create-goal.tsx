@@ -1,4 +1,12 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { X } from 'lucide-react'
+import { Controller, useForm } from 'react-hook-form'
+import { createGoal } from '../http/create-goal'
+import {
+  type CreateGoalValidation,
+  createGoalValidation,
+} from '../validations/create-goal-validation'
 import { Button } from './ui/button'
 import {
   DialogClose,
@@ -15,9 +23,27 @@ import {
 } from './ui/radio-group'
 
 export const CreateGoal = () => {
+  const queryClient = useQueryClient()
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<CreateGoalValidation>({
+    resolver: zodResolver(createGoalValidation),
+  })
+
+  const handleCreateGoal = async (data: CreateGoalValidation) => {
+    await createGoal(data)
+    queryClient.invalidateQueries({ queryKey: ['summary'] })
+    queryClient.invalidateQueries({ queryKey: ['peding-goals'] })
+    reset()
+  }
+
   return (
     <DialogContent>
-      <div className="flex flex-col gap-6 h-full">
+      <div className="flex flex-col gap-6 h-full overflow-y-scroll">
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <DialogTitle>Cadastrar meta</DialogTitle>
@@ -31,7 +57,10 @@ export const CreateGoal = () => {
           </DialogDescription>
         </div>
 
-        <form className="flex flex-1 flex-col justify-between">
+        <form
+          className="flex flex-1 flex-col justify-between"
+          onSubmit={handleSubmit(handleCreateGoal)}
+        >
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <Label htmlFor="title">Qual à atividade?</Label>
@@ -39,23 +68,87 @@ export const CreateGoal = () => {
                 id="title"
                 autoFocus
                 placeholder="Praticar exercícios, meditar, etc..."
+                {...register('title')}
               />
+              {errors.title && (
+                <p className="text-red-400 text-xs">{errors.title.message}</p>
+              )}
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="week">Quantas vezes na semana?</Label>
-              <RadioGroup>
-                <RadioGroupItem value="1">
-                  <RadioGroupIndicator />
-                  <span className="text-sm text-zinc-300 font-medium leading-none">
-                    1x na semana
-                  </span>
-                  <span className="text-lg leading-none">🥱</span>
-                </RadioGroupItem>
-              </RadioGroup>
+
+              <Controller
+                control={control}
+                name="desireWeeklyFrequency"
+                render={({ field }) => {
+                  return (
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={String(field.value)}
+                    >
+                      <RadioGroupItem value="1">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          1x na semana
+                        </span>
+                        <span className="text-lg leading-none">🥱</span>
+                      </RadioGroupItem>
+
+                      <RadioGroupItem value="2">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          2x na semana
+                        </span>
+                        <span className="text-lg leading-none">🙂</span>
+                      </RadioGroupItem>
+
+                      <RadioGroupItem value="3">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          3x na semana
+                        </span>
+                        <span className="text-lg leading-none">😎</span>
+                      </RadioGroupItem>
+
+                      <RadioGroupItem value="4">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          4x na semana
+                        </span>
+                        <span className="text-lg leading-none">😜</span>
+                      </RadioGroupItem>
+
+                      <RadioGroupItem value="5">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          5x na semana
+                        </span>
+                        <span className="text-lg leading-none">🤨</span>
+                      </RadioGroupItem>
+
+                      <RadioGroupItem value="6">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          6x na semana
+                        </span>
+                        <span className="text-lg leading-none">🤯</span>
+                      </RadioGroupItem>
+
+                      <RadioGroupItem value="7">
+                        <RadioGroupIndicator />
+                        <span className="text-zinc-300 text-sm font-medium leading-none">
+                          Todos os dias da semana
+                        </span>
+                        <span className="text-lg leading-none">🔥</span>
+                      </RadioGroupItem>
+                    </RadioGroup>
+                  )
+                }}
+              />
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mt-4">
             <DialogClose asChild>
               <Button className="flex-1" variant="secondary">
                 Fechar
