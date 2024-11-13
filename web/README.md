@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+<h1 align="center">
+  Project Orbit
+</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+**Demonstração:**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+  <img alt="Speech Notes Home" src="./.screens/home.png" width="100%">
+  <img alt="Speech Notes New Note" src="./.screens/create.png" width="100%">
+</p>
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Instalação e Execução:**
 
-- Configure the top-level `parserOptions` property like this:
+1.  Clone o repositório:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Bash
+
+```
+git clone https://github.com/Gui-dev/project-orbit.git
+
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2.  Instale as dependências
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Bash
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+npm ci
+
+```
+
+3.  Execute a aplicação:
+
+Bash
+
+```
+npm run dev
+```
+
+4.  Acesse a aplicação em http://localhost:5173 no seu navegador.
+
+**Contribuição:**
+
+Agradecemos a sua contribuição para este projeto! Você pode contribuir submetendo issues e pull requests no repositório GitHub.
+
+**Licença:**
+
+Este projeto está licenciado sob a licença MIT.
